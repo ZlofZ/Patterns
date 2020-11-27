@@ -2,7 +2,7 @@ window.onload = init;
 var canvas, ctx;
 
 var angleA = 0, angleB = 0, angleC = 0;
-var changeA = 5, changeB = -6, changeC = 7;
+var changeA = 7, changeB = -6, changeC = 1;
 var lengthA = 150, lengthB = 150, lengthC = 150;
 var oldpos;
 
