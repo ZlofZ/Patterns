@@ -2,35 +2,46 @@ window.onload = init;
 var canvas, ctx;
 
 var angleA = 0, angleB = 0, angleC = 0;
-var changeA = 8.1, changeB = -11.9, changeC = 12;
+var changeA = 5, changeB = -6, changeC = 7;
 var lengthA = 150, lengthB = 150, lengthC = 150;
 var oldpos;
 
+var path = true, lines = false, dots = false;
+
 function init() {
   console.log("INIT");
-  let viewportWidth = $(window).width();
-  var viewportHeight = $(window).height()-4;
-  $(".bodywrapper").append('<canvas id="canvas" height="'+viewportHeight+'" width="'+viewportWidth+'"></canvas>');
+  let viewportWidth = $(window).width()-$(".input-wrapper").width();
+  var viewportHeight = $(window).height()-20;
+  $(".canvas-wrapper").append('<canvas id="canvas" height="'+viewportHeight+'" width="'+viewportWidth+'"></canvas>');
   canvas = $("#canvas")[0];
   ctx = canvas.getContext("2d");
   ctx.translate(viewportWidth/2, viewportHeight/2);
   window.requestAnimationFrame(step);
 
-  $("#cA").keyup((evt) => {
-      changeA = Number(evt.target.value);
+  $("#slider-A").on("input",(evt) => {
+    let val = evt.target.value/10.0;
+    changeA = Number(val);
+    $("#val-A").text(val);
   });
-  $("#cB").on("keyup",(evt) => {
-    changeB = Number(evt.target.value);
+  $("#slider-B").on("input",(evt) => {
+    let val = evt.target.value/10.0;
+    changeB = Number(val);
+    $("#val-B").text(val);
   });
-  $("#cC").on("keyup",(evt) => {
-    changeC = Number(evt.target.value);
+  $("#slider-C").on("input",(evt) => {
+    let val = evt.target.value/10.0;
+    changeC = Number(val);
+    $("#val-C").text(val);
   });
 
-  $("#clearb").click(evt => clearCanvas());
+  $("#path-toggle").click(() => path=!path);
+  $("#lines-toggle").click(() => lines=!lines);
+  $("#dots-toggle").click(() => dots=!dots);
+  $("#clear-button").click(() => clearCanvas());
 }
 
 
-function testdraw() {
+function draw() {
   console.log("DRAW");
   ctx.beginPath();
   ctx.strokeStyle="#eee";
@@ -38,16 +49,35 @@ function testdraw() {
   ctx.moveTo(0,0);
   let endCoords = calculateEndPos(0,0,lengthA, angleA);
   //console.log(endCoords);
-  ctx.moveTo(endCoords[0],endCoords[1]);
-  endCoords = calculateEndPos(endCoords[0],endCoords[1],lengthB,angleB);
-  ctx.moveTo(endCoords[0],endCoords[1]);
-  endCoords = calculateEndPos(endCoords[0],endCoords[1],lengthC,angleC);
-  ctx.moveTo(endCoords[0],endCoords[1]);
-  //ctx.arc(endCoords[0],endCoords[1],3,0,2*Math.PI);
+  if (lines) {
+    $("#lines-toggle").css("background","#223");
+    ctx.lineTo(endCoords[0],endCoords[1]);
+    endCoords = calculateEndPos(endCoords[0],endCoords[1],lengthB,angleB);
+    ctx.lineTo(endCoords[0],endCoords[1]);
+    endCoords = calculateEndPos(endCoords[0],endCoords[1],lengthC,angleC);
+    ctx.lineTo(endCoords[0],endCoords[1]);
+  }else{
+    $("#lines-toggle").css("background","#112");
+    ctx.moveTo(endCoords[0],endCoords[1]);
+    endCoords = calculateEndPos(endCoords[0],endCoords[1],lengthB,angleB);
+    ctx.moveTo(endCoords[0],endCoords[1]);
+    endCoords = calculateEndPos(endCoords[0],endCoords[1],lengthC,angleC);
+    ctx.moveTo(endCoords[0],endCoords[1]);
+  }
+  
+  
+  //
   if(oldpos == undefined){
     oldpos = endCoords;
   }else{
-    ctx.lineTo(oldpos[0], oldpos[1]);
+    if(path) {
+      $("#path-toggle").css("background","#334");
+      ctx.lineTo(oldpos[0], oldpos[1]);
+    }else $("#path-toggle").css("background","#112");
+    if(dots) {
+      $("#dots-toggle").css("background","#334");
+      ctx.arc(endCoords[0],endCoords[1],3,0,2*Math.PI);
+    } else $("#dots-toggle").css("background","#112");
     oldpos = endCoords;
   }
 
@@ -84,7 +114,7 @@ function radToDeg(rad) {
 function step(timestamp) {
   updateLines();
   //clearCanvas();
-  testdraw();
+  draw();
 
   window.requestAnimationFrame(step);
 }

@@ -2,16 +2,43 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" charset="utf-8"></script>
     <script src="script.js" charset="utf-8"></script>
     <title>Patterns</title>
   </head>
-  <body style="background:#112;">
+  <body>
     <div class="bodywrapper" >
-   <input type="text" id="cA" name="" value="">
-   <input type="text" id="cB" name="" value="">
-   <input type="text" id="cC" name="" value="">
-   <button type="button" name="button" id="clearb"></button>
+      <div class="input-wrapper">
+        <!-- <input type="text" id="cA" name="" value=""> -->
+        <div class="row">
+          <div class="slider-container">
+            <input type="range" id="slider-A" name="" min="-1000" max="1000" value="50">
+            <p id="val-A">5</p>
+          </div>
+          <div class="slider-container">
+            <input type="range" id="slider-B" name="" min="-1000" max="1000" value="50">
+            <p id="val-B">-6</p>
+          </div>
+          <div class="slider-container">
+            <input type="range" id="slider-C" name="" min="-1000" max="1000" value="50">
+            <p id="val-C">7</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="button-div" id="path-toggle">PATH</div>
+          <div class="button-div" id="lines-toggle">LINES</div>
+        </div>
+        <div class="row">
+          <div class="button-div" id="dots-toggle">DOTS</div>
+          <div class="button-div" id="clear-button">CLEAR</div>
+        </div>
+        
+        <!-- <button type="button" name="button" id="clearb">CLEAR</button> -->
+      </div>
+      <div class="canvas-wrapper">
+        
+      </div>
     </div>
   </body>
 </html>
