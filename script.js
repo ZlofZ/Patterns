@@ -6,7 +6,7 @@ var changeA = 7, changeB = -6, changeC = 1;
 var lengthA = 150, lengthB = 150, lengthC = 150;
 var oldpos;
 
-var path = true, lines = false, dots = false;
+var path = true, lines = false, dots = false, clear = false;
 
 function init() {
   console.log("INIT");
@@ -17,32 +17,77 @@ function init() {
   ctx = canvas.getContext("2d");
   ctx.translate(viewportWidth/2, viewportHeight/2);
   window.requestAnimationFrame(step);
+  
 
-  $("#slider-A").on("input",(evt) => {
-    let val = evt.target.value/10.0;
-    changeA = Number(val);
-    $("#val-A").text(val);
-  });
-  $("#slider-B").on("input",(evt) => {
-    let val = evt.target.value/10.0;
-    changeB = Number(val);
-    $("#val-B").text(val);
-  });
-  $("#slider-C").on("input",(evt) => {
-    let val = evt.target.value/10.0;
-    changeC = Number(val);
-    $("#val-C").text(val);
-  });
+  $("#slider-A").on("input",(evt) => sliderInputHandler(evt, "A"));
+  $("#slider-A").on("wheel", (evt) => sliderWheelEvHandler(evt, "A"));
+  
+  $("#slider-B").on("input",(evt) => sliderInputHandler(evt, "B"));
+  $("#slider-B").on("wheel", (evt) => sliderWheelEvHandler(evt, "B"));
+  
+  $("#slider-C").on("input",(evt) => sliderInputHandler(evt, "C"));
+  $("#slider-C").on("wheel", (evt) => sliderWheelEvHandler(evt, "C"));
 
   $("#path-toggle").click(() => path=!path);
   $("#lines-toggle").click(() => lines=!lines);
   $("#dots-toggle").click(() => dots=!dots);
-  $("#clear-button").click(() => clearCanvas());
+  $("#clear-button").click(() => clear=!clear);
+  $(canvas).on("click keyup", (evt) => {
+    console.log(evt);
+    if(evt.originalEvent.code=="Space" && evt.type == "keyup"){
+      clearCanvas();
+    }else if(evt.type == "click"){
+      clearCanvas();
+    }
+  });
 }
 
+function sliderInputHandler(evt, sliderid) {
+  let val = evt.target.value;
+  switch (sliderid) {
+    case "A":
+      changeA = Number(val);
+      $("#val-A").text(val);
+      break;
+    case "B":
+      changeB = Number(val);
+      $("#val-B").text(val);
+      break;
+    case "C":
+      changeC = Number(val);
+      $("#val-C").text(val);
+      break;
+    default:
+      
+  }
+}
+
+function sliderWheelEvHandler(evt, sliderid) {
+  console.log(evt);
+  let addition = evt.originalEvent.wheelDelta > 0 ? 0.1 : -0.1;
+  let val = Number(evt.target.value)+addition;
+  val = Math.round(val * 10) / 10;
+  evt.target.value=val;
+  switch (sliderid) {
+    case "A":
+      changeA = Number(val);
+      $("#val-A").text(val);
+      break;
+    case "B":
+      changeB = Number(val);
+      $("#val-B").text(val);
+      break;
+    case "C":
+      changeC = Number(val);
+      $("#val-C").text(val);
+    default:
+      
+  }
+}
 
 function draw() {
   console.log("DRAW");
+  if(clear)clearCanvas();
   ctx.beginPath();
   ctx.strokeStyle="#eee";
   ctx.weight=2;

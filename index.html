@@ -2,9 +2,11 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.3/rangeslider.min.css" integrity="sha512-Rp0yZ3NMh1xOUZ4VHYggmX4pq4ZJdpcOETH03qBD5qNDsqTBw1MzUnX0T5PcTJmr2mNTOmtbxsHaGwzjylNpHA==" crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.3/rangeslider.min.js" integrity="sha512-BUlWdwDeJo24GIubM+z40xcj/pjw7RuULBkxOTc+0L9BaGwZPwiwtbiSVzv31qR7TWx7bs6OPTE5IyfLOorboQ==" crossorigin="anonymous"></script>
     <script src="script.js" charset="utf-8"></script>
     <title>Patterns</title>
   </head>
@@ -14,15 +16,15 @@
         <!-- <input type="text" id="cA" name="" value=""> -->
         <div class="row">
           <div class="slider-container">
-            <input type="range" id="slider-A" name="" min="-1000" max="1000" value="70">
+            <input type="range" id="slider-A" name="" min="-360" max="360" step="0.1" value="7">
             <p id="val-A">7</p>
           </div>
           <div class="slider-container">
-            <input type="range" id="slider-B" name="" min="-1000" max="1000" value="-60">
+            <input type="range" id="slider-B" name="" min="-360" max="360" step="0.1" value="-6">
             <p id="val-B">-6</p>
           </div>
           <div class="slider-container">
-            <input type="range" id="slider-C" name="" min="-1000" max="1000" value="10">
+            <input type="range" id="slider-C" name="" min="-360" max="360" step="0.1" value="1">
             <p id="val-C">1</p>
           </div>
         </div>
